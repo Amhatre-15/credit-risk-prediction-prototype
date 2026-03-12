@@ -77,6 +77,11 @@ if st.button("Predict Risk"):
     prediction = model.predict(sample)
 
     if prediction[0] == 0:
-        st.success("Loan is SAFE (No Default Expected)")
-    else:
-        st.error("High Risk of DEFAULT")
+    st.success("Loan is SAFE (No Default Expected)")
+    st.write(f"Estimated Default Risk: {probability*100:.2f}%")
+    st.info("This borrower appears financially stable based on the provided financial information.")
+else:
+    st.error("High Risk of DEFAULT")
+    st.write(f"Estimated Default Risk: {probability*100:.2f}%")
+    st.warning("The borrower may face difficulty repaying the loan based on the provided financial information.")
+
