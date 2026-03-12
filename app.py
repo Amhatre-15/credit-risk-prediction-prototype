@@ -51,7 +51,7 @@ history = st.selectbox(
 
 cred_length = st.number_input(
     "Credit History Length (Years)",
-    help="How many years the borrower has been using credit products such as credit cards or loans."
+    help="Years the borrower has used credit (loans or credit cards)."
 )
 
 # Predict button
@@ -73,15 +73,18 @@ if st.button("Predict Risk"):
     # Fill remaining columns with 0
     sample = sample.fillna(0)
 
-    # Predict
+    # Predict result
     prediction = model.predict(sample)
 
-    if prediction[0] == 0:
-    st.success("Loan is SAFE (No Default Expected)")
-    st.write(f"Estimated Default Risk: {probability*100:.2f}%")
-    st.info("This borrower appears financially stable based on the provided financial information.")
-else:
-    st.error("High Risk of DEFAULT")
-    st.write(f"Estimated Default Risk: {probability*100:.2f}%")
-    st.warning("The borrower may face difficulty repaying the loan based on the provided financial information.")
+    # Get probability of default
+    probability = model.predict_proba(sample)[0][1]
 
+    if prediction[0] == 0:
+        st.success("Loan is SAFE (No Default Expected)")
+        st.write(f"Estimated Default Risk: {probability*100:.2f}%")
+        st.info("This borrower appears financially stable based on the provided financial information.")
+
+    else:
+        st.error("High Risk of DEFAULT")
+        st.write(f"Estimated Default Risk: {probability*100:.2f}%")
+        st.warning("The borrower may face difficulty repaying the loan based on the provided financial information.")
