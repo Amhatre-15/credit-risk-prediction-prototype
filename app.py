@@ -9,58 +9,63 @@ st.title("Credit Risk Prediction System")
 
 st.info("Fill the borrower details below. The system will estimate whether the loan is safe or has a high risk of default.")
 
-# User inputs
-age = st.number_input(
+# User inputs with placeholder
+age = st.text_input(
     "Customer Age",
-    min_value=18,
-    max_value=100,
-    help="Enter the age of the borrower."
+    placeholder="18"
 )
 
-income = st.number_input(
+income = st.text_input(
     "Customer Income (Annual Income in ₹)",
-    help="Enter the borrower's total yearly income before tax."
+    placeholder="0.00"
 )
 
-employment = st.number_input(
+employment = st.text_input(
     "Employment Duration (Years at Current Job)",
-    help="How many years the borrower has been working in their current job."
+    placeholder="0.00"
 )
 
-loan_amount = st.number_input(
+loan_amount = st.text_input(
     "Loan Amount (₹)",
-    help="Total loan amount the borrower wants to take."
+    placeholder="0.00"
 )
 
-interest = st.number_input(
+interest = st.text_input(
     "Loan Interest Rate (%)",
-    help="Annual interest rate applied to the loan."
+    placeholder="0.00"
 )
 
-term = st.number_input(
+term = st.text_input(
     "Loan Term (Years)",
-    help="Number of years over which the borrower will repay the loan."
+    placeholder="0.00"
 )
 
 history = st.selectbox(
     "Past Loan Default",
     [0,1],
-    format_func=lambda x: "No previous default" if x==0 else "Has defaulted before",
-    help="Select if the borrower has ever failed to repay a loan in the past."
+    format_func=lambda x: "No previous default" if x==0 else "Has defaulted before"
 )
 
-cred_length = st.number_input(
+cred_length = st.text_input(
     "Credit History Length (Years)",
-    help="Years the borrower has used credit (loans or credit cards)."
+    placeholder="0.00"
 )
 
 # Predict button
 if st.button("Predict Risk"):
 
-    # Create dataframe with all features used during training
+    # Convert inputs to numeric
+    age = float(age or 0)
+    income = float(income or 0)
+    employment = float(employment or 0)
+    loan_amount = float(loan_amount or 0)
+    interest = float(interest or 0)
+    term = float(term or 0)
+    cred_length = float(cred_length or 0)
+
+    # Create dataframe
     sample = pd.DataFrame(columns=model.feature_names_in_)
 
-    # Fill numeric values
     sample.loc[0,"customer_age"] = age
     sample.loc[0,"customer_income"] = income
     sample.loc[0,"employment_duration"] = employment
@@ -70,13 +75,9 @@ if st.button("Predict Risk"):
     sample.loc[0,"historical_default"] = history
     sample.loc[0,"cred_hist_length"] = cred_length
 
-    # Fill remaining columns with 0
     sample = sample.fillna(0)
 
-    # Predict result
     prediction = model.predict(sample)
-
-    # Get probability of default
     probability = model.predict_proba(sample)[0][1]
 
     if prediction[0] == 0:
