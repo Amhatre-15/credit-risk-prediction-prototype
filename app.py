@@ -12,7 +12,7 @@ st.info("Fill the borrower details below. The system will estimate whether the l
 # User inputs with placeholder
 age = st.text_input("Customer Age", placeholder="18")
 
-income = st.text_input("Customer Income (Annual Income in ₹)", placeholder="0.00")
+income = st.text_input("Customer Income", placeholder="0.00")
 
 employment = st.text_input("Employment Duration (Years at Current Job)", placeholder="0.00")
 
