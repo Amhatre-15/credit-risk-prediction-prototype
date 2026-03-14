@@ -60,12 +60,18 @@ if st.button("Predict Risk"):
     # Get probability of default
     prediction_prob = model.predict_proba(sample)[0][1]
 
-    if prediction_prob < 0.5:
-        st.success("Loan is SAFE (Low Risk of Default)")
-        st.write(f"Estimated Default Risk: {prediction_prob*100:.2f}%")
-        st.info("This borrower appears financially stable based on the provided financial information.")
+    # Show percentage
+    st.write(f"Estimated Default Risk: {prediction_prob*100:.2f}%")
+
+    # Risk classification
+    if prediction_prob < 0.4:
+        st.error("HIGH RISK of Default")
+        st.warning("The borrower has a high probability of failing to repay the loan.")
+
+    elif prediction_prob < 0.8:
+        st.warning("MODERATE RISK")
+        st.info("The borrower may face some difficulty in repaying the loan.")
 
     else:
-        st.error("High Risk of DEFAULT")
-        st.write(f"Estimated Default Risk: {prediction_prob*100:.2f}%")
-        st.warning("The borrower may face difficulty repaying the loan based on the provided financial information.")
+        st.success("LOW RISK (Loan is SAFE)")
+        st.info("This borrower appears financially stable based on the provided financial information.")
