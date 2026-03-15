@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge\&logo=python\&logoColor=ffdd54)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Model-blue?style=for-the-badge)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red?style=for-the-badge\&logo=streamlit)
-![Status](https://img.shields.io/badge/Project-Completed-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/PROJECT-ONGOING-yellow?style=for-the-badge)
 
 ---
 
